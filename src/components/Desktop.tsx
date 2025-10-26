@@ -51,9 +51,9 @@ const Desktop: React.FC = () => {
   };
 
   const handlePopupClose = (id: number) => {
+    dismissPopup(id);
     gainXp(5);
     incrementPopupsClosed();
-    dismissPopup(id);
   };
 
   return (
