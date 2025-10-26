@@ -16,7 +16,7 @@ export const minikitConfig = {
   miniapp: {
     version: "1",
     name: "Base XP", 
-    subtitle: "The Operating System for Farcaster", 
+    subtitle: "The Operating System", 
     description: "Ads",
     screenshotUrls: [`${ROOT_URL}/background.png`],
     iconUrl: `${ROOT_URL}/background.png`,
