@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useXp } from "../hooks/useXp";
-import { usePopups } from "../hooks/UsePopups";
+import { usePopups } from "../hooks/usePopups";
 import { useDraggable } from "../hooks/useDraggable";
 
 import DesktopIcon from "./DesktopIcon";
