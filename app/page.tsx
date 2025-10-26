@@ -1,7 +1,7 @@
 "use client";
 
-import App from "@/src/App";
+import Desktop from "@/src/components/Desktop";
 
 export default function Page() {
-  return <App />;
+  return <Desktop />;
 }
