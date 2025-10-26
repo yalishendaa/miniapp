@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { useEffect, useState } from "react";
 
 export type FarcasterUser = {
@@ -8,7 +7,7 @@ export type FarcasterUser = {
   pfpUrl: string;
 };
 
-// нормализуем pfpUrl, потому что из farcaster иногда приходит не строка
+// нормализация pfp, если приходит объект
 function normalizePfp(raw: any): string {
   if (!raw) return "";
   if (typeof raw === "string") return raw;
@@ -18,9 +17,9 @@ function normalizePfp(raw: any): string {
   return "";
 }
 
-// этот хук делает так:
-// - если мы внутри farcaster mini-app, он тянет юзера из sdk
-// - если мы не внутри farcaster, он просто возвращает Guest User
+// этот хук делает две вещи:
+// 1. внутри Farcaster: дергает sdk.actions.ready() и получает user
+// 2. вне Farcaster (браузер): не падает, просто возвращает Guest User
 export function useFarcasterUser() {
   const [userData, setUserData] = useState<FarcasterUser>({
     fid: "0",
@@ -33,11 +32,10 @@ export function useFarcasterUser() {
 
     async function init() {
       try {
-        // динамический импорт sdk чтобы не падать на билде вне farcaster
         const sdkModule: any = await import("@farcaster/miniapp-sdk");
         const sdk: any = sdkModule.default || sdkModule;
 
-        // важно для контейнера мини-аппов
+        // 👇 критично для Farcaster mini-app
         await sdk.actions.ready();
 
         const u: any = sdk?.context?.user;
@@ -50,7 +48,7 @@ export function useFarcasterUser() {
           pfpUrl: normalizePfp(u?.pfpUrl),
         });
       } catch {
-        // просто локальный режим / dev / не farcaster
+        // Мы не в Farcaster → просто гость
         if (!active) return;
         setUserData({
           fid: "0",

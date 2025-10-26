@@ -1,7 +1,18 @@
 "use client";
 
-import Desktop from "@/src/components/Desktop";
+import React from "react";
+import Desktop from "../src/components/Desktop";
+import { useFarcasterUser } from "../src/hooks/useFarcasterUser";
 
 export default function Page() {
-  return <Desktop />;
+  // просто вызвать, чтобы:
+  // - внутри Farcaster: sdk.actions.ready() -> снимает сплэш
+  // - вне Farcaster: не упасть
+  useFarcasterUser();
+
+  return (
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      <Desktop />
+    </div>
+  );
 }
