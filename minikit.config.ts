@@ -1,6 +1,5 @@
-const ROOT_URL =
-  process.env.NEXT_PUBLIC_URL ||
-  (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://miniapp-eight-snowy.vercel.app/` : 'http://localhost:3000');
+const ROOT_URL = 'https://miniapp-eight-snowy.vercel.app';
+
 
 /**
  * MiniApp configuration object. Must follow the Farcaster MiniApp specification.
