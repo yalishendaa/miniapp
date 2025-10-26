@@ -4,7 +4,7 @@ import { usePopups } from "../hooks/usePopups";
 import { useDraggable } from "../hooks/useDraggable";
 
 import DesktopIcon from "./DesktopIcon";
-import Taskbar from "./Taskbar";
+// import Taskbar from "./Taskbar"; // убрали панель снизу
 import ProfileWindow from "./ProfileWindow";
 import ControlPanelWindow from "./ControlPanelWindow";
 import DraggablePopup from "./DraggablePopup";
@@ -12,7 +12,6 @@ import Clippy from "./Clippy";
 import DogAssistant from "./DogAssistant";
 
 const Desktop: React.FC = () => {
-  // Достаём ВСЁ из useXp()
   const {
     xp,
     levelNumber,
@@ -31,32 +30,26 @@ const Desktop: React.FC = () => {
     incrementPopupsClosed,
   } = useXp();
 
-  // попапы (системные предупреждения)
   const { popups, dismissPopup } = usePopups();
 
-  // окна
   const [profileOpen, setProfileOpen] = useState(true);
   const [controlPanelOpen, setControlPanelOpen] = useState(true);
 
-  // перетаскивание окон и ассистентов
-  const profileDrag = useDraggable(160, 60); // окно профиля
-  const controlPanelDrag = useDraggable(140, 200); // окно панели
-  const clippyDrag = useDraggable(40, 300); // клиппи
-  const dogDrag = useDraggable(220, 320); // собака
+  const profileDrag = useDraggable(160, 60);
+  const controlPanelDrag = useDraggable(140, 200);
+  const clippyDrag = useDraggable(40, 300);
+  const dogDrag = useDraggable(220, 320);
 
-  // клик по клиппи -> XP + счётчик
   const handleClippyClick = () => {
     gainXp(1);
     incrementClippyClicks();
   };
 
-  // клик по собаке -> XP + счётчик
   const handleDogClick = () => {
     gainXp(1);
     incrementDogClicks();
   };
 
-  // закрытие попапа -> XP + счётчик
   const handlePopupClose = (id: number) => {
     gainXp(5);
     incrementPopupsClosed();
@@ -67,7 +60,7 @@ const Desktop: React.FC = () => {
     <div
       style={{
         width: "100%",
-        maxWidth: "430px", // мобильная ширина мини-аппа
+        maxWidth: "430px",
         height: "100dvh",
         position: "relative",
         overflow: "hidden",
@@ -80,7 +73,7 @@ const Desktop: React.FC = () => {
       }}
       draggable={false}
     >
-      {/* Иконки на рабочем столе */}
+      {/* desktop icons */}
       <div
         style={{
           position: "absolute",
@@ -105,7 +98,7 @@ const Desktop: React.FC = () => {
         />
       </div>
 
-      {/* Окно профиля (таскается за синий бар) */}
+      {/* profile window */}
       {profileOpen && (
         <div
           style={{
@@ -132,7 +125,7 @@ const Desktop: React.FC = () => {
         </div>
       )}
 
-      {/* Окно Control Panel (таскается за синий бар) */}
+      {/* control panel window */}
       {controlPanelOpen && (
         <div
           style={{
@@ -156,7 +149,7 @@ const Desktop: React.FC = () => {
         </div>
       )}
 
-      {/* Клиппи (перетаскиваем целиком) */}
+      {/* Clippy */}
       <div
         style={{
           position: "absolute",
@@ -172,13 +165,10 @@ const Desktop: React.FC = () => {
         onPointerDown={clippyDrag.onPointerDown}
         draggable={false}
       >
-        <Clippy
-          onClick={handleClippyClick}
-          dailyRemaining={dailyRemaining}
-        />
+        <Clippy onClick={handleClippyClick} dailyRemaining={dailyRemaining} />
       </div>
 
-      {/* Собака (перетаскиваем целиком) */}
+      {/* Dog */}
       <div
         style={{
           position: "absolute",
@@ -200,7 +190,7 @@ const Desktop: React.FC = () => {
         />
       </div>
 
-      {/* Всплывающие системные ошибки (каждый со своим драгом за шапку) */}
+      {/* popups */}
       {popups.map((popup) => (
         <DraggablePopup
           key={popup.id}
@@ -212,6 +202,8 @@ const Desktop: React.FC = () => {
         />
       ))}
 
+      {/* taskbar скрыли */}
+      {/* <Taskbar /> */}
     </div>
   );
 };

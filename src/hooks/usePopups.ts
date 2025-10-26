@@ -10,19 +10,16 @@ interface Popup {
 export const usePopups = () => {
   const [popups, setPopups] = useState<Popup[]>([]);
 
-  const messages: string[] = [
-    "System Warning: Productivity Critical",
-    "System Alert: Virtual Memory Low",
-    "System Error: Clippy Overload",
-    "Security Notice: Mouse Activity Suspicious",
-    "Reminder: Please touch grass",
-  ];
-
-  const getRandomMessage = useCallback(() => {
-    return messages[Math.floor(Math.random() * messages.length)];
-  }, [messages]);
-
   const spawnPopup = useCallback(() => {
+    // сообщения прямо здесь, чтобы не было зависимостей
+    const msgs = [
+      "System Warning: Productivity Critical",
+      "System Alert: Virtual Memory Low",
+      "System Error: Clippy Overload",
+      "Security Notice: Mouse Activity Suspicious",
+      "Reminder: Please touch grass",
+    ];
+
     const popupWidth = 240;
     const popupHeight = 140;
 
@@ -44,13 +41,13 @@ export const usePopups = () => {
 
     const newPopup: Popup = {
       id: Date.now() + Math.floor(Math.random() * 100000),
-      message: getRandomMessage(),
+      message: msgs[Math.floor(Math.random() * msgs.length)],
       x,
       y,
     };
 
     setPopups((prev) => [...prev, newPopup]);
-  }, [getRandomMessage]);
+  }, []);
 
   useEffect(() => {
     let timeoutId: number;
