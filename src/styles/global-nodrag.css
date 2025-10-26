@@ -1,0 +1,11 @@
+/* полностью запрещаем выделение и нативный drag */
+* {
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+  img {
+    -webkit-user-drag: none;
+    user-drag: none;
+    pointer-events: none;
+  }
+  
